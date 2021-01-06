@@ -1,8 +1,19 @@
 <?php
-function getFormUrl() {
-    $api_url = "http://localhost:4287";
-    $iframe_host_url = "http://localhost:4287";
-    $api_key = "PUT_YOUR_API_KEY_HERE ";
+function getConfig()
+{
+    $config["api_url"] = "http://right-consents-back:8087";
+    $config["iframe_host_url"] = "http://localhost:4287";
+    $config["api_key"] = "PUT YOUR API KEY HERE";
+
+    // HTTP server env var override (useful for docker tests)
+    $config["api_url"] = key_exists("API_URL", $_ENV) ? $_ENV["API_URL"] : $config["api_url"];
+    $config["iframe_host_url"] = key_exists("IFRAME_HOST_URL", $_ENV) ? $_ENV["IFRAME_HOST_URL"] : $config["iframe_host_url"];
+    $config["api_key"] = key_exists("API_KEY", $_ENV) ? $_ENV["API_KEY"] : $config["api_key"];
+    return $config;
+}
+
+function getFormUrl()
+{
     $context = [
         "subject" => "test-subject",
         "orientation" => "VERTICAL",
@@ -21,7 +32,7 @@ function getFormUrl() {
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL => $api_url . "/consents/token",
+        CURLOPT_URL => getConfig()["api_url"] . "/consents/token",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
@@ -30,7 +41,7 @@ function getFormUrl() {
         CURLOPT_CUSTOMREQUEST => "POST",
         CURLOPT_POSTFIELDS => json_encode($context),
         CURLOPT_HTTPHEADER => array(
-            "Authorization: Basic ".base64_encode($api_key),
+            "Authorization: Basic " . base64_encode(getConfig()["api_key"]),
             "Content-Type: application/json",
         ),
     ));
@@ -44,21 +55,20 @@ function getFormUrl() {
         echo "cURL Error #:" . $err;
     }
 
-    return $iframe_host_url."/consents?t=".$consent_token;
-
+    return getConfig()["iframe_host_url"] . "/consents?t=" . $consent_token;
 }
 
-$formUrl = getFormUrl();
-
 ?>
-
-<html>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
     <meta charset="utf-8">
     <title>Right Consents iFrame Integration Test</title>
 </head>
 <body>
 <h2 style="text-align: center">Right Consents iFrame Integration Test</h2>
-<iframe width="700" height="500" src="<?php echo $formUrl ?>"></iframe>
+<div style="text-align: center;">
+    <iframe src="<?php echo getFormUrl() ?>" width="700" height="850" title="iframe"></iframe>
+</div>
 </body>
 </html>
