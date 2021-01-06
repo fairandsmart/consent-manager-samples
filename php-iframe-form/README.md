@@ -1,37 +1,37 @@
-# PHP Iframe Sample
+# Right Consents - PHP Iframe Sample
 
 This sample demonstrated how a consent form can be integrated within an iframe using PHP.
 
-## Quick Launch
+## In a nutshell
 
-1. In your Right Consents instance, head to `Integration > Collect`
-2. Setup the sample form you wish to test, then click on `PHP integration example` at the end
-3. Copy the content and replace the `index.php` file with it
-4. In your Right Consents instance, head to `Integration > Security` and generate an API Key
-5. In your `index.php` file, replace `PUT_YOUR_API_KEY_HERE` with your newly generated API Key
+This sample is mean to be run as a docker container along with the [stock Rights Consents stack](https://github.com/fairandsmart/right-consents), please see below if your work environment
+is different.
 
-*Note: If you're running Right Consents locally, you will need to adjust the `$api_url` and `$iframe_host_url` given your setup (see [Advanced Setup](#advanced) below)*
-6. Run the container
+1. In your Right Consents instance, head to `Integration > Security` and generate an API Key ;
+1. Build the image : `docker build -t php-iframe-form` ;
+1. Run the container : `docker run -e API_KEY="<the previously generated API key>" -p 8785:80 --network="right-consents_default" php-iframe-form` ;
+1. Navigate to http://localhost:8785 ;
 
-```shell
-$ docker build -t php-iframe-form .
-$ docker run -p 8785:80 --network="right-consents_default" --name php-iframe-sample -d php-iframe-form
-```
+## Build and run a container with a generated sample
 
-The sample will be running on http://localhost:8785
+This sample can also be used to test Right Consents interface generated samples.
 
-## <a name="advanced"></a> Advanced Setup
+1. In your Right Consents instance, head to `Integration > Collect` ;
+1. Setup the sample form you wish to test, then click on `PHP integration example` at the end ;
+1. Copy the content and replace the `index.php` file with it ;
+1. Build the image : `docker build -t php-iframe-form` ;
+1. Run the container : `docker run -e API_KEY="<the previously generated API key>" -p 8785:80 --network="right-consents_default" php-iframe-form` ;
+1. Navigate to http://localhost:8785 ;
 
-If you wish to run the sample with docker and your Right Consents (RC) instance is installed locally, you will need to adjust some variables in the PHP code.
+# Sample tuning
 
-For reference, here are all the possible setups:
+The following env vars can be used to tune this sample :
+    
+| env. var. | usage | default value |
+|---|---|---|
+| API_URL | the Right Consents backend URL *from your PHP script point-of-view* | http://right-consents-back:8087 |
+| IFRAME_HOST_URL | the Right Consents backend URL *from your web browser point-of-view* | http://localhost:4287 |
+| API_KEY | your API key | |
 
-#### Local RC instance, with Docker
-* `$iframe_host_url` :  The endpoint of the local API on the host machine (http://localhost:4287)
-* `$api_url` : The endpoint of the API on the docker network (http://right-consents-back:8087)
-
-#### Local RC instance, without Docker
-`$api_url` and `$iframe_host_url` must be set with the same value (http://localhost:8087)
-
-#### Remote RC instance
-`$api_url` and `$iframe_host_url` must be set with the same value (i.e. the remote endpoint of the RC API)
+Generally speaking, you will give the same value to API_URL and IFRAME_HOST_URL, excepted when your PHP sample will need to access to the RC backend with a different URL than your end users.
+This is the case with our docker-compose setup, because from PHP's point-of-view, localhost is the *PHP container localhost* and not the *host localhost*. Yeah, that's tricky.
