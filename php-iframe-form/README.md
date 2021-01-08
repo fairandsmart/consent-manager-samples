@@ -9,7 +9,7 @@ is different.
 
 1. In your Right Consents instance, head to `Integration > Security` and generate an API Key ;
 1. Build the image : `docker build -t php-iframe-form .` ;
-1. Run the container : `docker run -e API_KEY="k410a5e2c23ea4f0998ae7ec17a9818e4:I@d=MfCRp-CTEtJRnCzytbS/" -p 8785:80 --network="right-consents_default" php-iframe-form` ;
+1. Run the container : `docker run -e API_KEY="<the previously generated API key>" -p 8785:80 --network="right-consents_default" php-iframe-form` ;
 1. Navigate to http://localhost:8785 ;
 
 This sample use a predefined consent context that generate a form for a subject id **test-subject**. If you submit the form in the iframe, you should be able to consult the subject page using the backoffice operator access: http://localhost:4286/admin/subjects/test-subject
