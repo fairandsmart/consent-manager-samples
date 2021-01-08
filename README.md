@@ -19,4 +19,7 @@ $ docker-compose up
 All examples below come with a Dockerfile for ease of use.
 
 ### PHP
-* [php-iframe-form](./php-iframe-form) : a basic example of the form served through an iframe using PHP
+
+* [php-iframe-form](./php-iframe-form) : a basic example that contains a single PHP page which display a consent form in an iframe.
+
+
