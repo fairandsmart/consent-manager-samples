@@ -17,8 +17,8 @@ function getFormUrl()
     $context = [
         "subject" => "test-subject",
         "orientation" => "VERTICAL",
-        "info" => "I1",
-        "elements" => array("Market.1"),
+        "info" => "basicinfo.001",
+        "elements" => array("processing.001"),
         "associatePreferences" => true,
         "callback" => "",
         "language" => "fr",
