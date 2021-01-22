@@ -15,22 +15,18 @@ function getConfig()
 function getFormUrl()
 {
     $context = [
-        "subject" => "test-subject",
+        "subject" => "sheldon",
         "orientation" => "VERTICAL",
         "info" => "basicinfo.001",
         "elements" => array("processing.001"),
-        "associatePreferences" => true,
-        "callback" => "",
         "language" => "fr",
         "validity" => "P6M",
+        "validityVisible" => "true",
         "formType" => "FULL",
-        "receiptDeliveryType" => "DISPLAY",
-        "theme" => "",
+        "receiptDisplayType" => "HTML",
         "iframe" => true
     ];
-
     $curl = curl_init();
-
     curl_setopt_array($curl, array(
         CURLOPT_URL => getConfig()["api_url"] . "/consents/token",
         CURLOPT_RETURNTRANSFER => true,
