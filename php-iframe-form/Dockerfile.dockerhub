@@ -1,0 +1,2 @@
+FROM php:7.2-apache
+COPY php-iframe-form/index.php /var/www/html
