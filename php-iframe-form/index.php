@@ -16,15 +16,15 @@ function getFormUrl()
 {
     $context = [
         "subject" => "sheldon",
-        "orientation" => "VERTICAL",
-        "info" => "basicinfo.001",
-        "elements" => array("processing.001"),
-        "language" => "fr",
         "validity" => "P6M",
-        "validityVisible" => "true",
-        "formType" => "FULL",
-        "receiptDisplayType" => "HTML",
-        "iframe" => true
+        "language" => "fr",
+        "layoutData" => [
+            "type" => "layout",
+            "desiredReceiptMimeType" => "text/html",
+            "elements" => array("processing.001"),
+            "orientation" => "VERTICAL",
+            "info" => "basicinfo.001",
+        ]
     ];
     $curl = curl_init();
     curl_setopt_array($curl, array(
@@ -66,6 +66,6 @@ function getFormUrl()
 <div style="text-align: center;">
     <iframe src="<?php echo getFormUrl() ?>" id="content" frameborder="0" style="width:100%; height:100vh;"></iframe>
 </div>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.2.11/iframeResizer.js" onload="iFrameResize({log: true}, '#content');"></script>
+<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.2.11/iframeResizer.js" onload="iFrameResize({log: true}, '#content');"></script>-->
 </body>
 </html>
